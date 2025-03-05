@@ -5,6 +5,8 @@ import com.ds.sibelle.components.header
 import com.ds.sibelle.components.socialBar
 import com.ds.sibelle.models.Section
 import com.ds.sibelle.models.Theme
+import com.ds.sibelle.styles.MainButtonStyle
+import com.ds.sibelle.styles.MainImageStyle
 import com.ds.sibelle.util.Constants.FONT_FAMILY
 import com.ds.sibelle.util.Constants.LOREM_IPSUM_SHORTEST
 import com.ds.sibelle.util.Constants.SECTION_WIDTH
@@ -24,72 +26,67 @@ import com.varabyte.kobweb.silk.components.layout.SimpleGrid
 import com.varabyte.kobweb.silk.components.layout.numColumns
 import com.varabyte.kobweb.silk.components.navigation.Link
 import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
+import com.varabyte.kobweb.silk.style.toModifier
 import com.varabyte.kobweb.silk.theme.breakpoint.rememberBreakpoint
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Button
 import org.jetbrains.compose.web.dom.P
-import org.jetbrains.compose.web.dom.Span
 import org.w3c.dom.Text
 
 
 
 @Composable
-fun mainSection(){
-val  breakpoint = rememberBreakpoint()
-    Box (
-       modifier = Modifier.id(Section.Home.id)
-           .maxWidth(SECTION_WIDTH.px),
+fun mainSection(onMenuClicked: () -> Unit) {
+    Box(
+        modifier = Modifier
+            .id(Section.Home.id)
+            .maxWidth(SECTION_WIDTH.px),
         contentAlignment = Alignment.TopCenter
-
-    ){
+    ) {
         mainBackground()
-        mainContent(breakpoint = breakpoint)
+        mainContent(onMenuClicked = onMenuClicked)
     }
-
 }
 
 @Composable
-fun mainBackground(){
+fun mainBackground() {
     Image(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
             .objectFit(ObjectFit.Cover),
         src = Res.Image.background,
         alt = "Background Image"
     )
-
 }
 
 @Composable
-fun mainContent(breakpoint: Breakpoint){
+fun mainContent(onMenuClicked: () -> Unit) {
+    val breakpoint = rememberBreakpoint()
     Column(
-     modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.SpaceBetween,
-
-    ){
-        header()
-        Column (
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        header(onMenuClicked = onMenuClicked)
+        Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Bottom,
             horizontalAlignment = Alignment.CenterHorizontally
-        ){
-
+        ) {
             SimpleGrid(
                 modifier = Modifier.fillMaxWidth(
-                if (breakpoint >= Breakpoint.MD) 80.percent else 90.percent
-            ),
-                numColumns = numColumns(base=1,md=2)
-            ){
+                    if (breakpoint >= Breakpoint.MD) 80.percent
+                    else 90.percent
+                ),
+                numColumns = numColumns(base = 1, md = 2)
+            ) {
                 mainText(breakpoint = breakpoint)
                 mainImage()
-
             }
-
         }
-
     }
-
 }
+
 
 @Composable
 fun mainText(breakpoint: Breakpoint) {
@@ -97,20 +94,15 @@ fun mainText(breakpoint: Breakpoint) {
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        if (breakpoint >= Breakpoint.MD) {
+        if (breakpoint > Breakpoint.MD) {
             socialBar()
         }
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.px) // Ajoutez un padding pour éviter que le texte ne touche les bords
-        ) {
+        Column {
             P(
                 attrs = Modifier
-                    .display(DisplayStyle.Block)
                     .margin(topBottom = 0.px)
                     .fontFamily(FONT_FAMILY)
-                    .fontSize(if (breakpoint >= Breakpoint.LG) 10.px else 20.px)
+                    .fontSize(if(breakpoint >= Breakpoint.LG) 45.px else 20.px)
                     .fontWeight(FontWeight.Normal)
                     .color(Theme.Primary.rgb)
                     .toAttrs()
@@ -121,7 +113,7 @@ fun mainText(breakpoint: Breakpoint) {
                 attrs = Modifier
                     .margin(top = 20.px, bottom = 0.px)
                     .fontFamily(FONT_FAMILY)
-                    .fontSize(if (breakpoint >= Breakpoint.LG) 68.px else 40.px)
+                    .fontSize(if(breakpoint >= Breakpoint.LG) 68.px else 40.px)
                     .fontWeight(FontWeight.Bolder)
                     .color(Theme.Secondary.rgb)
                     .toAttrs()
@@ -153,9 +145,8 @@ fun mainText(breakpoint: Breakpoint) {
                 Text(LOREM_IPSUM_SHORTEST)
             }
             Button(
-                attrs = Modifier
+                attrs = MainButtonStyle.toModifier()
                     .height(40.px)
-                    .width(120.px) // Ajustez la largeur pour que le texte "Hire me" soit entièrement visible
                     .border(width = 0.px)
                     .borderRadius(r = 5.px)
                     .backgroundColor(Theme.Primary.rgb)
@@ -174,16 +165,15 @@ fun mainText(breakpoint: Breakpoint) {
         }
     }
 }
+
 @Composable
 fun mainImage() {
     Column(
-        modifier = Modifier
-            .fillMaxSize(80.percent)
-            .fillMaxHeight(),
+        modifier = Modifier.fillMaxSize(80.percent).fillMaxHeight(),
         verticalArrangement = Arrangement.Bottom
     ) {
         Image(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = MainImageStyle.toModifier().fillMaxWidth(),
             src = Res.Image.main,
             alt = "Main Image"
         )

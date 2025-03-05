@@ -25,70 +25,70 @@ import org.jetbrains.compose.web.css.percent
 import org.jetbrains.compose.web.css.px
 
 @Composable
-fun header(){
+fun header(onMenuClicked: () -> Unit) {
     val breakpoint = rememberBreakpoint()
-    Row (
-        modifier = Modifier.fillMaxWidth( if (breakpoint <= Breakpoint.MD) 80.percent else 90.percent)
-            .margin (topBottom = 50.px),
+    Row(
+        modifier = Modifier
+            .fillMaxWidth(if (breakpoint > Breakpoint.MD) 80.percent else 90.percent)
+            .margin(topBottom = 50.px),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
-
-    ){
-        leftSide(breakpoint=breakpoint)
-        if (breakpoint > Breakpoint.MD ){
+    ) {
+        leftSide(
+            breakpoint = breakpoint,
+            onMenuClicked = onMenuClicked
+        )
+        if (breakpoint > Breakpoint.MD) {
             rightSide()
         }
-
     }
 }
 
 @Composable
-fun leftSide(breakpoint: Breakpoint){
-    Row(
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        if (breakpoint <= Breakpoint.MD){
+fun leftSide(
+    breakpoint: Breakpoint,
+    onMenuClicked: () -> Unit
+) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        if (breakpoint <= Breakpoint.MD) {
             FaBars(
-                modifier = Modifier.margin (right = 15.px),
+                modifier = Modifier
+                    .margin(right = 15.px)
+                    .onClick {
+                        onMenuClicked()
+                    },
                 size = IconSize.XL
             )
         }
-
         Image(
             modifier = LogoStyle.toModifier(),
             src = Res.Image.logo,
-            description = "Logo"
-
+            alt = "Logo Image"
         )
     }
-
 }
 
-
 @Composable
-fun rightSide(){
+fun rightSide() {
     Row(
-        modifier = Modifier.fillMaxWidth()
-            .borderRadius (50.px )
+        modifier = Modifier
+            .fillMaxWidth()
+            .borderRadius(r = 50.px)
             .backgroundColor(Theme.LighterGray.rgb)
-            .padding(20.px)
-        ,
+            .padding(all = 20.px),
         horizontalArrangement = Arrangement.End
     ) {
-        Section.entries.toTypedArray().take(6).forEach { section: Section ->
+        Section.entries.toTypedArray().take(6).forEach { section ->
             Link(
-                modifier = NavigationItemStyle.toModifier().padding(right = 30.px)
+                modifier = NavigationItemStyle.toModifier()
+                    .padding(right = 30.px)
                     .fontFamily(FONT_FAMILY)
                     .fontSize(18.px)
                     .fontWeight(FontWeight.Normal)
                     .textDecorationLine(TextDecorationLine.None),
-                path=section.path,
+                path = section.path,
                 text = section.title
-
-
             )
         }
-
     }
-
 }
