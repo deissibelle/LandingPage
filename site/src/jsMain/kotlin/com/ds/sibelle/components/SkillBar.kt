@@ -21,7 +21,7 @@ import org.jetbrains.compose.web.dom.Text
 @Composable
 fun Skillbar(
     name:String,
-    progressBarHeight:CSSSizeValue<CSSUnit.px>  =5.px,
+    progressBarHeight:CSSSizeValue<CSSUnit.px> =5.px,
     percentage: CSSSizeValue<CSSUnit.percent> =50.percent
 
 ){

@@ -1,6 +1,7 @@
 package com.ds.sibelle.sections
 
 import androidx.compose.runtime.Composable
+import com.ds.sibelle.components.SectionTitle
 import com.ds.sibelle.components.Skillbar
 import com.ds.sibelle.models.Section
 import com.ds.sibelle.util.Constants.SECTION_WIDTH
@@ -21,8 +22,9 @@ fun AboutSection(){
             .padding (topBottom = 150.px),
         contentAlignment = Alignment.Center
     ) {
-  Skillbar(
-      name = "Creative"
+  SectionTitle(section = Section.About,
+      alignment = Alignment.End
   )
+
     }
 }
