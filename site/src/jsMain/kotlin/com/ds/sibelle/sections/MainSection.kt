@@ -1,8 +1,8 @@
 package com.ds.sibelle.sections
 
 import androidx.compose.runtime.Composable
-import com.ds.sibelle.components.header
-import com.ds.sibelle.components.socialBar
+import com.ds.sibelle.components.Header
+import com.ds.sibelle.components.SocialBar
 import com.ds.sibelle.models.Section
 import com.ds.sibelle.models.Theme
 import com.ds.sibelle.styles.MainButtonStyle
@@ -31,25 +31,26 @@ import com.varabyte.kobweb.silk.theme.breakpoint.rememberBreakpoint
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Button
 import org.jetbrains.compose.web.dom.P
-import org.w3c.dom.Text
+import org.jetbrains.compose.web.dom.Text
+
 
 
 
 @Composable
-fun mainSection(onMenuClicked: () -> Unit) {
+fun MainSection(onMenuClicked: () -> Unit) {
     Box(
         modifier = Modifier
             .id(Section.Home.id)
             .maxWidth(SECTION_WIDTH.px),
         contentAlignment = Alignment.TopCenter
     ) {
-        mainBackground()
-        mainContent(onMenuClicked = onMenuClicked)
+        MainBackground()
+        MainContent(onMenuClicked = onMenuClicked)
     }
 }
 
 @Composable
-fun mainBackground() {
+fun MainBackground() {
     Image(
         modifier = Modifier
             .fillMaxSize()
@@ -60,14 +61,14 @@ fun mainBackground() {
 }
 
 @Composable
-fun mainContent(onMenuClicked: () -> Unit) {
+fun MainContent(onMenuClicked: () -> Unit) {
     val breakpoint = rememberBreakpoint()
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        header(onMenuClicked = onMenuClicked)
+        Header(onMenuClicked = onMenuClicked)
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Bottom,
@@ -80,8 +81,8 @@ fun mainContent(onMenuClicked: () -> Unit) {
                 ),
                 numColumns = numColumns(base = 1, md = 2)
             ) {
-                mainText(breakpoint = breakpoint)
-                mainImage()
+                MainText(breakpoint = breakpoint)
+                MainImage()
             }
         }
     }
@@ -89,13 +90,13 @@ fun mainContent(onMenuClicked: () -> Unit) {
 
 
 @Composable
-fun mainText(breakpoint: Breakpoint) {
+fun MainText(breakpoint: Breakpoint) {
     Row(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
         if (breakpoint > Breakpoint.MD) {
-            socialBar()
+            SocialBar()
         }
         Column {
             P(
@@ -167,7 +168,7 @@ fun mainText(breakpoint: Breakpoint) {
 }
 
 @Composable
-fun mainImage() {
+fun MainImage() {
     Column(
         modifier = Modifier.fillMaxSize(80.percent).fillMaxHeight(),
         verticalArrangement = Arrangement.Bottom

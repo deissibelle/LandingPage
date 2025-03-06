@@ -25,7 +25,7 @@ import org.jetbrains.compose.web.css.percent
 import org.jetbrains.compose.web.css.px
 
 @Composable
-fun header(onMenuClicked: () -> Unit) {
+fun Header(onMenuClicked: () -> Unit) {
     val breakpoint = rememberBreakpoint()
     Row(
         modifier = Modifier
@@ -34,18 +34,18 @@ fun header(onMenuClicked: () -> Unit) {
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        leftSide(
+        LeftSide(
             breakpoint = breakpoint,
             onMenuClicked = onMenuClicked
         )
         if (breakpoint > Breakpoint.MD) {
-            rightSide()
+            RightSide()
         }
     }
 }
 
 @Composable
-fun leftSide(
+fun LeftSide(
     breakpoint: Breakpoint,
     onMenuClicked: () -> Unit
 ) {
@@ -69,7 +69,7 @@ fun leftSide(
 }
 
 @Composable
-fun rightSide() {
+fun RightSide() {
     Row(
         modifier = Modifier
             .fillMaxWidth()

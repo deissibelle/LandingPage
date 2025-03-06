@@ -1,7 +1,8 @@
 package com.ds.sibelle.pages
 
 import androidx.compose.runtime.*
-import com.ds.sibelle.sections.mainSection
+import com.ds.sibelle.sections.AboutSection
+import com.ds.sibelle.sections.MainSection
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.foundation.layout.Column
@@ -12,7 +13,7 @@ import com.varabyte.kobweb.core.Page
 
 @Page
 @Composable
-fun homePage() {
+fun HomePage() {
     var menuOpened by remember { mutableStateOf(false) }
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
@@ -20,9 +21,11 @@ fun homePage() {
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            mainSection(onMenuClicked = { menuOpened = true })
+            MainSection(onMenuClicked = { menuOpened = true })
+            AboutSection()
 
         }
+
 
     }
 }

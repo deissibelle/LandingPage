@@ -15,7 +15,7 @@ import com.varabyte.kobweb.silk.style.toModifier
 import org.jetbrains.compose.web.css.px
 
 @Composable
-fun socialBar(){
+fun SocialBar(){
     Column (
         modifier = Modifier
             .margin (
@@ -29,12 +29,12 @@ fun socialBar(){
         horizontalAlignment = Alignment.CenterHorizontally
 
     ){
-         socialLinks()
+         SocialLinks()
     }
 }
 
 @Composable
- private fun socialLinks(){
+ private fun SocialLinks(){
     Link(
         path =  WEBSITE
 
