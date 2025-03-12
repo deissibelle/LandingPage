@@ -1,10 +1,7 @@
 package com.ds.sibelle.pages
 
 import androidx.compose.runtime.*
-import com.ds.sibelle.sections.AboutSection
-import com.ds.sibelle.sections.MainSection
-import com.ds.sibelle.sections.ServiceContent
-import com.ds.sibelle.sections.ServiceSection
+import com.ds.sibelle.sections.*
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.foundation.layout.Column
@@ -26,6 +23,7 @@ fun HomePage() {
             MainSection(onMenuClicked = { menuOpened = true })
             AboutSection()
             ServiceSection()
+            PortfolioSection()
 
         }
 
