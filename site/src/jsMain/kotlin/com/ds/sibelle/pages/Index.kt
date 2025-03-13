@@ -24,6 +24,8 @@ fun HomePage() {
             AboutSection()
             ServiceSection()
             PortfolioSection()
+            AchievementsSection()
+
 
         }
 
