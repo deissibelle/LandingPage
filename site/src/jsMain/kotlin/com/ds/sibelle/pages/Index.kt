@@ -2,6 +2,7 @@ package com.ds.sibelle.pages
 
 import androidx.compose.runtime.*
 import com.ds.sibelle.components.BackToTopButton
+import com.ds.sibelle.components.OverflowMenu
 import com.ds.sibelle.sections.*
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
 import com.varabyte.kobweb.compose.foundation.layout.Box
@@ -32,6 +33,9 @@ fun HomePage() {
             FooterSection()
         }
         BackToTopButton()
+        if (menuOpened) {
+            OverflowMenu(onMenuClosed = { menuOpened = false })
+        }
 
 
     }
