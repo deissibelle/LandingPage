@@ -1,6 +1,7 @@
 package com.ds.sibelle.pages
 
 import androidx.compose.runtime.*
+import com.ds.sibelle.components.BackToTopButton
 import com.ds.sibelle.sections.*
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
 import com.varabyte.kobweb.compose.foundation.layout.Box
@@ -30,6 +31,7 @@ fun HomePage() {
             ContactSection()
             FooterSection()
         }
+        BackToTopButton()
 
 
     }
