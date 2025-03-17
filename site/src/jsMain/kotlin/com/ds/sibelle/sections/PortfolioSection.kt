@@ -1,6 +1,9 @@
 package com.ds.sibelle.sections
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import com.ds.sibelle.components.PortfolioCard
 import com.ds.sibelle.components.SectionTitle
 import com.ds.sibelle.models.Portfolio
@@ -10,6 +13,7 @@ import com.ds.sibelle.util.Constants.SECTION_WIDTH
 import com.varabyte.kobweb.compose.css.Cursor
 import com.varabyte.kobweb.compose.css.Overflow
 import com.varabyte.kobweb.compose.css.ScrollBehavior
+import com.varabyte.kobweb.compose.css.Transition
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.foundation.layout.Column
@@ -24,6 +28,9 @@ import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
 import com.varabyte.kobweb.silk.style.toModifier
 import com.varabyte.kobweb.silk.theme.breakpoint.rememberBreakpoint
 import kotlinx.browser.document
+import kotlinx.browser.window
+import kotlinx.coroutines.delay
+import org.jetbrains.compose.web.css.ms
 import org.jetbrains.compose.web.css.percent
 import org.jetbrains.compose.web.css.px
 
@@ -64,9 +71,13 @@ fun PortfolioContent() {
 
 @Composable
 fun PortfolioCards(breakpoint: Breakpoint) {
+    val scrollableContainerId = "scrollableContainer"
+    val scrollAmount = 325.0 // Adjust this value based on your card width + margin
+    val isAtEnd = remember { mutableStateOf(false) }
+
     Row(
         modifier = Modifier
-            .id("scrollableContainer")
+            .id(scrollableContainerId)
             .fillMaxWidth()
             .margin(bottom = 25.px)
             .maxWidth(
@@ -75,7 +86,8 @@ fun PortfolioCards(breakpoint: Breakpoint) {
                 else 300.px
             )
             .overflow(Overflow.Hidden)
-            .scrollBehavior(ScrollBehavior.Smooth)
+            .scrollBehavior(ScrollBehavior.Smooth) // Smooth scrolling
+            .transition(Transition.of(property = "scroll-left", duration = 2000.ms)) // Slower scroll transition
     ) {
         Portfolio.entries.forEach { portfolio ->
             PortfolioCard(
@@ -84,6 +96,28 @@ fun PortfolioCards(breakpoint: Breakpoint) {
                 ),
                 portfolio = portfolio
             )
+        }
+    }
+
+    // Auto-scroll logic
+    LaunchedEffect(Unit) {
+        while (true) {
+            delay(10000) // 10 seconds delay
+
+            val container = document.getElementById(scrollableContainerId)
+            if (container != null) {
+                val currentScroll = container.scrollLeft
+                val maxScroll = container.scrollWidth - container.clientWidth
+
+                if (currentScroll >= maxScroll - 1) {
+                    // If at the end, reset to the start
+                    container.scrollTo(x = 0.0, y = 0.0)
+                    isAtEnd.value = false
+                } else {
+                    // Otherwise, scroll to the next card
+                    container.scrollBy(x = scrollAmount, y = 0.0)
+                }
+            }
         }
     }
 }

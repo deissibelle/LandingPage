@@ -1,6 +1,5 @@
 package com.ds.sibelle.sections
 
-
 import androidx.compose.runtime.*
 import com.ds.sibelle.components.SectionTitle
 import com.ds.sibelle.components.Testimonial
@@ -22,6 +21,7 @@ import com.varabyte.kobweb.silk.components.layout.SimpleGrid
 import com.varabyte.kobweb.silk.components.layout.numColumns
 import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
 import com.varabyte.kobweb.silk.theme.breakpoint.rememberBreakpoint
+import kotlinx.coroutines.delay
 import org.jetbrains.compose.web.css.*
 
 @Composable
@@ -41,6 +41,15 @@ fun TestimonialSection() {
 fun TestimonialContent() {
     val breakpoint = rememberBreakpoint()
     var selectedPage by remember { mutableStateOf(0) }
+
+    // Auto-scroll logic
+    LaunchedEffect(Unit) {
+        while (true) {
+            delay(10000) // 10 seconds delay
+            selectedPage = (selectedPage + 1) % 3 // Reset to 0 after reaching the last page
+        }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxWidth(
@@ -106,8 +115,8 @@ fun TestimonialCards(
                             )
                         )
                         .transition(
-                            Transition.of(property = "visibility", duration = 300.ms),
-                            Transition.of(property = "opacity", duration = 300.ms)
+                            Transition.of(property = "visibility", duration = 2000.ms), // Slower transition
+                            Transition.of(property = "opacity", duration = 2000.ms) // Slower transition
                         ),
                     testimonial = testimonial,
                     breakpoint = breakpoint
@@ -135,8 +144,8 @@ fun TestimonialCards(
                             )
                         )
                         .transition(
-                            Transition.of(property = "visibility", duration = 300.ms),
-                            Transition.of(property = "opacity", duration = 300.ms)
+                            Transition.of(property = "visibility", duration = 2000.ms), // Slower transition
+                            Transition.of(property = "opacity", duration = 2000.ms) // Slower transition
                         ),
                     testimonial = testimonial,
                     breakpoint = breakpoint
@@ -145,7 +154,6 @@ fun TestimonialCards(
         }
     }
 }
-
 @Composable
 fun TestimonialNavigation(
     selectedPage: Int,
